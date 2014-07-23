@@ -18,13 +18,24 @@
 #
 makeCacheMatrix <- function(x = matrix()) {
 
+    # set the inverted matrix to NULL
     invMatrix <- NULL
+    
+    # set() - allows a new matrix to be set into the function. 
+    #   this call will invalidate the computed cached inverse matrix
     set <- function(y) {
         x <<- y
         invMatrix <<- NULL
     }
+    
+    # get() - simply returns the original matrix
     get <- function() x
+    
+    # setinverse() allows an inverted matrix to be set in this function
     setinverse <- function(inverse) invMatrix <<- inverse
+    
+    # getinverse() simply return the inverted matrix. It would return null, if 
+    #   an inverted matrix has not been set
     getinverse <- function() invMatrix
     list(set = set, get = get,
          setinverse = setinverse,
@@ -41,14 +52,27 @@ makeCacheMatrix <- function(x = matrix()) {
 # 
 cacheSolve <- function(x, ...) {
     
+    # get the inverted matrix from the passed in makeCacheMatrix() instance
     invMatrix <- x$getinverse()
+    
+    # if inverted matrix is not null (i.e. already computed), return 
+    #       inverted matrix. Otherwise the code will proceed to compute the inverted matrix
+    #       This acts as the cache 
     if (!is.null(invMatrix)){
         message("getting cached data")
         return(invMatrix)
     }
+    
+    # get the original matrix
     data <- x$get()
+    
+    # use solve function to compute the inverse
     invMatrix <- solve(data)
+    
+    # set the inverst back into the makeCacheMatrix() instance
     x$setinverse(invMatrix)
+    
+    # return the inverted matrix
     invMatrix
 }
 
@@ -77,7 +101,7 @@ test <- function() {
     print("inverse matrix after caching")
     print(z)
           
-    # check that the the newly created inverse is correct
-    print("checking if inverted matrix is correct")
+    # check that the the newly created inverse is correct. 
+    print("checking if inverted matrix is correct. Correct result shows a matrix of all TRUEs")
     print(z == solve(x$get()))
 }
