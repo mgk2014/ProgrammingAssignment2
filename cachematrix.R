@@ -2,7 +2,9 @@
 ## author: mgk2014
 ## date created - 21-Jul-2014
 ## coursera - r-programming, programming assignment 2
-## test - script includes a test() for reference
+## 
+## Test() function - this script includes a test function that runs a test code to validate the functions
+##
 
 ## makeCacheMatrix(x = matrix())
 #   This function takes a matrix parameter and creates an instance of this function
@@ -52,19 +54,20 @@ cacheSolve <- function(x, ...) {
 
 
 ## test()
-#   This function verifies the functions and serves as a sample code to test these functions
+#   This function verifies the functions and serves as a sample code 
+#   to test these functions
 # 
 test <- function() {
 
     # create an instance of the function
-    x <- makeCacheMatrix(matrix(sample(100,25), 5,5)) 
+    x <- makeCacheMatrix(matrix(sample(1000,16), 4,4)) 
     
     # check the newly created matrix
     y <- x$get()                                   
     print("new matrix")
     print(y)
     
-    # the inverse should be NULL at this point
+    # the inverse should be empty at this point
     z <- x$getinverse()
     print(paste("inverse matrix", z))
           
